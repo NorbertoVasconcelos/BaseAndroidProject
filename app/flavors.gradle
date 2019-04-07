@@ -4,14 +4,20 @@ android {
     productFlavors {
         dev {
             manifestPlaceholders = [appname:"EntertainmentAppDev"]
+            buildConfigField "String", "API_URL", "\"http://api.themoviedb.org/3/\""
+            buildConfigField "String", "API_KEY", "\"8715fa7d58858605f8ffc5f8bc0013d9\""
         }
 
         uat {
             manifestPlaceholders = [appname:"EntertainmentApp-uat"]
+            buildConfigField "String", "API_URL", "\"http://api.themoviedb.org/3/\""
+            buildConfigField "String", "API_KEY", "\"8715fa7d58858605f8ffc5f8bc0013d9\""
         }
 
         production {
             manifestPlaceholders = [appname:"EntertainmentApp"]
+            buildConfigField "String", "API_URL", "\"http://api.themoviedb.org/3/\""
+            buildConfigField "String", "API_KEY", "\"8715fa7d58858605f8ffc5f8bc0013d9\""
         }
     }
 }
