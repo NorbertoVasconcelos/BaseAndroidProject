@@ -13,6 +13,7 @@ This repository aims to help developers start a new android project and for that
     -> Retrofit2
     -> ViewModels
     -> MVVM (Model-View-ViewModel)
+    -> MultiDexApplication
     ...
 
 
