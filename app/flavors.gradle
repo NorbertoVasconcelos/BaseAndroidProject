@@ -1,0 +1,17 @@
+android {
+    flavorDimensions "app"
+
+    productFlavors {
+        dev {
+            manifestPlaceholders = [appname:"EntertainmentAppDev"]
+        }
+
+        uat {
+            manifestPlaceholders = [appname:"EntertainmentApp-uat"]
+        }
+
+        production {
+            manifestPlaceholders = [appname:"EntertainmentApp"]
+        }
+    }
+}
