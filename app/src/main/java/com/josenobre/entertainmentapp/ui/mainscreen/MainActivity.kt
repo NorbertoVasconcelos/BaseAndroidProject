@@ -1,6 +1,7 @@
 package com.josenobre.entertainmentapp.ui.mainscreen
 
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.josenobre.entertainmentapp.R
@@ -17,6 +18,8 @@ class MainActivity : BaseActivity<MainActivityViewModel>() {
         ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
     override fun doOnCreated() {
-        Toast.makeText(applicationContext, "Init", Toast.LENGTH_LONG).show()
+        viewModel.getPopularMovies().observe(this, Observer {
+            Toast.makeText(applicationContext, it.data?.totalResults.toString(), Toast.LENGTH_LONG).show()
+        })
     }
 }

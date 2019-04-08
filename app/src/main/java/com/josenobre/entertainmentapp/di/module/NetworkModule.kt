@@ -3,6 +3,7 @@ package com.josenobre.entertainmentapp.di.module
 import androidx.annotation.NonNull
 import com.josenobre.entertainmentapp.BuildConfig
 import com.josenobre.entertainmentapp.network.AuthInterceptor
+import com.josenobre.entertainmentapp.network.api.ApiService
 import com.josenobre.entertainmentapp.network.api.adapter.LiveDataCallAdapterFactory
 import com.josenobre.entertainmentapp.utils.AppConstants.CONNECT_TIMEOUT
 import com.josenobre.entertainmentapp.utils.AppConstants.READ_TIMEOUT
@@ -19,6 +20,14 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
+
+    companion object {
+        private val TAG = NetworkModule::class.java.simpleName
+    }
+
+    @Singleton
+    @Provides
+    fun providesLiveDataCallAdapterFactory() = LiveDataCallAdapterFactory()
 
     @Provides
     @Singleton
@@ -50,4 +59,8 @@ class NetworkModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //Set call to return {@link Observable}
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 }

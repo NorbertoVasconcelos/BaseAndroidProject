@@ -3,6 +3,7 @@ package com.josenobre.entertainmentapp.di
 import android.app.Application
 import com.josenobre.entertainmentapp.App
 import com.josenobre.entertainmentapp.di.module.ActivityBuilderModule
+import com.josenobre.entertainmentapp.di.module.NetworkModule
 import com.josenobre.entertainmentapp.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -15,7 +16,8 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         ActivityBuilderModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        NetworkModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {

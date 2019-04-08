@@ -1,14 +1,14 @@
+package com.josenobre.entertainmentapp.network.api.adapter
+
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.josenobre.entertainmentapp.network.api.adapter.AppExecutors
-import com.josenobre.entertainmentapp.network.api.adapter.Resource
 import com.josenobre.entertainmentapp.network.model.ApiErrorResponse
 import com.josenobre.entertainmentapp.network.model.ApiResponse
 import com.josenobre.entertainmentapp.network.model.ApiSuccessResponse
 
-abstract class NetworkBoundResource<ResultType, RefreshType>
+abstract class NetworkBoundResource<ResultType>
 @MainThread constructor(private val appExecutors: AppExecutors) {
 
     companion object {
@@ -17,10 +17,6 @@ abstract class NetworkBoundResource<ResultType, RefreshType>
 
     private val result = MediatorLiveData<Resource<ResultType>>()
     private val network = MediatorLiveData<ResultType>()
-    private val refresh = MediatorLiveData<Result<RefreshType>>()
-
-    private var refreshCall: LiveData<ApiResponse<RefreshType>>? = null
-
 
     init {
         requestFromNetwork()
@@ -51,25 +47,17 @@ abstract class NetworkBoundResource<ResultType, RefreshType>
                 }
                 is ApiErrorResponse -> {
                     appExecutors.mainThread().execute {
-                        refreshCall = refreshCall()
-                        if (response.errorCode == 401 && refreshCall != null) {
-                            refresh.addSource(refreshCall!!) {
-                                refresh.removeSource(refreshCall!!)
-                            }
-                        } else {
-                            result.addSource(network) { newData ->
-                                setValue(Resource.error(response.errorMessage, response.errorCode, newData))
-                            }
-
-                            updateNetworkSource(null)
+                        result.addSource(network) { newData ->
+                            setValue(Resource.error(response.errorMessage, response.errorCode, newData))
                         }
+                        updateNetworkSource(null)
                     }
                 }
             }
         }
     }
 
-    fun asLiveData() = result as LiveData<*>
+    fun asLiveData() = result as LiveData<Resource<ResultType>>
 
     @MainThread
     private fun setValue(newValue: Resource<ResultType>) {
@@ -83,17 +71,11 @@ abstract class NetworkBoundResource<ResultType, RefreshType>
         network.value = newValue
     }
 
-    @MainThread
-    protected open fun refreshCall(): LiveData<ApiResponse<RefreshType>>? {
-        return null
-    }
-
     @WorkerThread
     protected open fun processResponse(response: ApiSuccessResponse<ResultType>) = response.body
 
     @WorkerThread
     protected open fun saveCallResult(data: ResultType?) {
-
     }
 
     @MainThread
