@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.josenobre.entertainmentapp.network.model.Movie
 import java.util.ArrayList
 
-class MovieResult {
+class MovieResponse {
 
     var page: Int? = null
     var results: List<Movie> = ArrayList()
