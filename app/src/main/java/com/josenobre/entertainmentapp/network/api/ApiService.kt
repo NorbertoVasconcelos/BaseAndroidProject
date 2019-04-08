@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("movie/popular?")
+    @GET("discover/movie?sort_by=popularity.desc")
     fun getPopularMovies(): LiveData<ApiResponse<MovieResponse>>
 
 }

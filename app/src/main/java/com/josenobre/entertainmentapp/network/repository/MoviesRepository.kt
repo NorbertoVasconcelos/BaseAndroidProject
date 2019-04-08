@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class MoviesRepository @Inject constructor(private val apiService: ApiService, private val appExecutors: AppExecutors) {
 
-    fun getPopularMovies(): LiveData<Resource<MovieResponse>> {
+    fun retrievePopularMovies(): LiveData<Resource<MovieResponse>> {
         return object : NetworkBoundResource<MovieResponse>(appExecutors) {
             override fun createCall() = apiService.getPopularMovies()
         }.asLiveData()

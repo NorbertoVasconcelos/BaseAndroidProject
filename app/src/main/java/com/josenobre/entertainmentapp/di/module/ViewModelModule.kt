@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.josenobre.entertainmentapp.di.ViewModelFactory
 import com.josenobre.entertainmentapp.di.ViewModelKey
-import com.josenobre.entertainmentapp.ui.mainscreen.MainActivityViewModel
+import com.josenobre.entertainmentapp.ui.activity.MainActivityViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
